@@ -3,7 +3,7 @@ import { showLoading, hideLoading } from "react-redux-loading";
 
 export const RECEIVE_TWEETS = "RECEIVE_TWEETS";
 export const TOGGLE_TWEET = "LIKE_TWEET"
-const ADD_NEW_TWEET = "LIKE_TWEET"
+export const ADD_TWEET = "ADD_TWEET";
 export function receiveTweets(tweets) {
   return {
     type: RECEIVE_TWEETS,
@@ -20,11 +20,13 @@ export function addTweet(tweet) {
 }
 
 export function handleAddTweet(text, replyingTo) {
+  console.log("handleAddTweet")
   return (dispatch, getState) => {
     const { authedUser } = getState()
     dispatch( showLoading );
     return saveTweet({ text, author: authedUser, replyingTo})
       .then((tweet) => {
+        console.log("saved: ", tweet);
         dispatch(addTweet(tweet));
       })
       .then(() => {
